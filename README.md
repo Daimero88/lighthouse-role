@@ -1,4 +1,4 @@
-# Ansible Role: clickhouse
+# Ansible Role: Lighthouse
 [MIT](https://opensource.org/licenses/MIT)
 
 ## Description
