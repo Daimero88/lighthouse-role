@@ -31,5 +31,5 @@ This project is licensed under MIT License.
 
 ## Author Information
 
-[lighthouse](https://lighthouse-book.sigmaprime.io/intro.html) by `Google, Inc.`
+[lighthouse](https://lighthouse-book.sigmaprime.io/intro.html) by Google  
 Role by [Daimero88](https://github.com/Daimero88).
