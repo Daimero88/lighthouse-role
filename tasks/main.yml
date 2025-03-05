@@ -1,2 +1,35 @@
 ---
-# tasks file for lighthouse-role
+- name: Download and install Lighthouse & nginx
+  tags: lighthouse
+  block:
+    - name: Lighthouse. Install nginx & git client
+      become: true
+      ansible.builtin.apt:
+        name: "{{ lighthouse_packages }}"
+        update_cache: true
+        state: present
+
+    - name: Lighthouse. Check if repository exists
+      ansible.builtin.stat:
+        path: "{{ lighthouse_data_dir }}"
+      register: lighthouse_repo
+
+    - name: Lighthouse. Clone source code by git client
+      become: true
+      ansible.builtin.git:
+        repo: "{{ lighthouse_code_src }}"
+        dest: "{{ lighthouse_data_dir }}"
+        version: "{{ lighthouse_git_version }}"
+        update: false
+      when: not lighthouse_repo.stat.exists
+      changed_when: false
+
+    - name: Lighthouse. Nginx config
+      become: true
+      ansible.builtin.template:
+        src: "template/nginx/lighthouse.conf.j2"
+        dest: "/etc/nginx/conf.d/{{ lighthouse_nginx_conf }}"
+        mode: "0644"
+        owner: root
+        group: root
+      notify: Start Lighthouse service
